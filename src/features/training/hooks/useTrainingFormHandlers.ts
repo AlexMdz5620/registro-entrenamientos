@@ -20,7 +20,7 @@ export function useTrainingFormHandlers(
     if (trainingToEdit?.intencidad !== undefined) {
       setIntensidad(trainingToEdit.intencidad.toString());
     }
-  }, [trainingToEdit]);
+  }, [trainingToEdit, setIntensidad]);
 
   // Cerrar el modal del registro de entrenmaienot
   const handleCloseModal = useCallback(() => {
