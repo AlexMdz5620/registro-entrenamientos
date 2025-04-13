@@ -20,12 +20,11 @@ export default function TrainingForm({
   trainingToEdit,
 }: {
   setIsModalOpen: (value: boolean) => void;
-  trainingToEdit?: (Training & {_id:Id<"trainings">})  | undefined;
+  trainingToEdit?: (Training & { _id: Id<"trainings"> }) | undefined;
 }) {
   // Inicio del input range
-  const [intensidad, setIntencidad] = useState(
-    trainingToEdit?.intencidad.toString() || "5"
-  );
+  const [intensidad, setIntensidad] = useState("5");
+
   // Almacenamiento del valor de la Capacidad Física
   const [capacidadSeleccionada, setCapacidadSeleccionada] = useState(
     trainingToEdit?.capacidad || ""
@@ -35,7 +34,7 @@ export default function TrainingForm({
   const { handleCloseModal, handleSubmit } = useTrainingFormHandlers(
     setIsModalOpen,
     setCapacidadSeleccionada,
-    setIntencidad,
+    setIntensidad,
     trainingToEdit
   );
 
@@ -70,7 +69,7 @@ export default function TrainingForm({
         required
         defaultValue={trainingToEdit?.duracion?.toString()}
         className={styleDivInput}
-        />
+      />
       <InputFile
         label={"Fecha"}
         name={"fecha"}
@@ -78,11 +77,11 @@ export default function TrainingForm({
         required
         defaultValue={
           trainingToEdit?.fecha
-          ? new Date(trainingToEdit.fecha).toISOString().substring(0,10)
-          : undefined
+            ? new Date(trainingToEdit.fecha).toISOString().substring(0, 10)
+            : undefined
         }
         className={styleDivInput}
-        />
+      />
 
       <TextareaField
         label="Ejercicios"
@@ -93,8 +92,8 @@ export default function TrainingForm({
       />
 
       <IntensidadRange
-        intensidad={trainingToEdit?.intencidad.toString() || intensidad.toString()}
-        setIntensidad={setIntencidad}
+        intensidad={intensidad}
+        setIntensidad={setIntensidad}
       />
 
       <div className="mt-6 flex justify-end gap-4 md:gap-2 md:mt-3 ">

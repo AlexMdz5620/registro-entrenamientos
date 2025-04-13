@@ -6,7 +6,6 @@ import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { Training } from "@/types/training";
 
-
 interface Props {
   trainings: Training[];
   onEdit: (training: Training) => void;
@@ -85,7 +84,7 @@ export default function TrainingList({ trainings, onEdit }: Props) {
               <th className="p-3">Duración</th>
               <th className="p-3">Fecha</th>
               <th className="p-3">Intensidad</th>
-              <th className="p-3">Editar</th>
+              {selectedIDs.length > 0 && <th>Editar</th>}
             </tr>
           </thead>
           <tbody>
@@ -113,19 +112,20 @@ export default function TrainingList({ trainings, onEdit }: Props) {
                 <td className="p-3">{training.duracion} min</td>
                 <td className="p-3">{training.fecha}</td>
                 <td className="p-3">{training.intencidad}</td>
-                <td className="p-3">
-                  { selectedIDs.includes(training._id) &&
-                    (<button
-                      onClick={() => {
-                        onEdit(training);
-                      }}
-                      className={`w-24 px-4 py-2 rounded transition-all duration-200 text-white bg-blue-600 hover:bg-blue-500`}
-                      disabled={selectedIDs.length === 0}
-                    >
-                      Editar
-                    </button>)
-                  }
-                </td>
+                {selectedIDs.length > 0 && (
+                  <td className="p-3">
+                    {selectedIDs.includes(training._id) && (
+                      <button
+                        onClick={() => {
+                          onEdit(training);
+                        }}
+                        className="w-24 px-4 py-2 rounded transition-all duration-200 text-white bg-blue-600 hover:bg-blue-500"
+                      >
+                        Editar
+                      </button>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

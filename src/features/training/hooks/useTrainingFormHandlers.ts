@@ -2,27 +2,32 @@
 
 import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Capacidad, Entrenamiento, Training } from "@/types/training";
 import { Id } from "../../../../convex/_generated/dataModel";
 
 export function useTrainingFormHandlers(
   setIsModalOpen: (value: boolean) => void,
   setCapacidadSeleccionada: (value: string) => void,
-  setIntencidad: (value: string) => void,
-  trainingToEdit?: Training & {_id: Id<'trainings'>},
+  setIntensidad: (value: string) => void,
+  trainingToEdit?: Training & { _id: Id<"trainings"> }
 ) {
   // Instancia para creación de un nuevo entrenamiento
   const createTraining = useMutation(api.training.saveTraining);
   const updateTraining = useMutation(api.training.updateTraining);
 
+  useEffect(() => {
+    if (trainingToEdit?.intencidad !== undefined) {
+      setIntensidad(trainingToEdit.intencidad.toString());
+    }
+  }, [trainingToEdit]);
+
   // Cerrar el modal del registro de entrenmaienot
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setCapacidadSeleccionada("");
-    setIntencidad("5");
-    
-  }, [setIsModalOpen, setCapacidadSeleccionada, setIntencidad]);
+    setIntensidad("5");
+  }, [setIsModalOpen, setCapacidadSeleccionada, setIntensidad]);
 
   // Crear un nuevo entrenamiento
   const handleSubmit = useCallback(
@@ -40,9 +45,9 @@ export function useTrainingFormHandlers(
         intencidad: Number(formData.get("intencidad")),
       };
 
-      if(trainingToEdit){
-        await updateTraining({ id: trainingToEdit._id, ...data});
-      } else{
+      if (trainingToEdit) {
+        await updateTraining({ id: trainingToEdit._id, ...data });
+      } else {
         await createTraining(data);
       }
 
