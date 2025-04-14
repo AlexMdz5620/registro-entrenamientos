@@ -6,11 +6,11 @@ import {
   capacidadesCoordinativas,
   styleDivInput,
 } from "@/utils/trainingOptions";
-import CapacidadSelect from "../form-fields/CapacidadesSelect";
-import CapaEspecificaSelect from "@/features/training/form-fields/CapaEspecificaSelect";
-import InputFile from "@/features/training/form-fields/InputFile";
-import TextareaField from "@/features/training/form-fields/TextareaFile";
-import IntensidadRange from "@/features/training/form-fields/IntensidadRanger";
+import CapacidadSelect from "./form-fields/CapacidadesSelect";
+import CapaEspecificaSelect from "@/features/training/components/form-fields/CapaEspecificaSelect";
+import InputFile from "@/features/training/components/form-fields/InputFile";
+import TextareaField from "@/features/training/components/form-fields/TextareaFile";
+import IntensidadRange from "@/features/training/components/form-fields/IntensidadRanger";
 import { useTrainingFormHandlers } from "@/features/training/hooks/useTrainingFormHandlers";
 import { Training } from "@/types/training";
 import { Id } from "../../../../convex/_generated/dataModel";

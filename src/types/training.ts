@@ -1,3 +1,5 @@
+import { Id } from "../../convex/_generated/dataModel";
+
 export type Capacidad = "cond" | "coor";
 
 export type Entrenamiento = {
@@ -11,7 +13,7 @@ export type Entrenamiento = {
 };
 
 export type Training = {
-  _id: string;
+  _id: Id<"trainings">;
   _creationTime: number;
   nombre: string;
   capacidad: string;

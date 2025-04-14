@@ -5,10 +5,12 @@ import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { Training } from "@/types/training";
+import DeleteButton from "./table-fields/DeleteButton";
+import TrainingTable from "./table-fields/TrainingTable";
 
 interface Props {
   trainings: Training[];
-  onEdit: (training: Training) => void;
+  onEdit: (training: Training & { _id: Id<"trainings">; }) => void;
 }
 
 export default function TrainingList({ trainings, onEdit }: Props) {
@@ -35,6 +37,15 @@ export default function TrainingList({ trainings, onEdit }: Props) {
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedIDs(trainings.map((t) => t._id));
+    } else {
+      setSelectedIDs([]);
+    }
+  };
+
   return (
     <div className="w-full max-w-5xl mt-6">
       {/* Barra de acciones */}
@@ -44,93 +55,22 @@ export default function TrainingList({ trainings, onEdit }: Props) {
 
         {/* Botones alineados a la derecha */}
         <div className="flex gap-2">
-          <button
-            onClick={() => {
+          <DeleteButton
+            onDelete={() => {
               handlerDelete(selectedIDs as Id<"trainings">[]);
             }}
-            className={`w-24 px-4 py-2 rounded transition text-white ${
-              selectedIDs.length > 0
-                ? "bg-gray-600 hover:bg-gray-500"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            disabled={selectedIDs.length === 0}
-          >
-            Eliminar
-          </button>
+            isDisabled={selectedIDs.length}
+          />
         </div>
       </div>
-
+      <TrainingTable 
+        trainings={trainings}
+        selectedIDs={selectedIDs}
+        handleSelectAll={handleSelectAll}
+        toggleSelection={toggleSelection}
+        onEdit={onEdit}
+      />
       {/* Tabla */}
-      <div className="overflow-x-auto rounded-lg shadow">
-        <table className="min-w-full bg-gray-800 text-white text-sm text-center">
-          <thead>
-            <tr className="bg-gray-700">
-              <th className="p-3">
-                <input
-                  type="checkbox"
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedIDs(trainings.map((t) => t._id));
-                    } else {
-                      setSelectedIDs([]);
-                    }
-                  }}
-                  checked={selectedIDs.length === trainings.length}
-                />
-              </th>
-              <th className="p-3">Nombre</th>
-              <th className="p-3">Capacidad</th>
-              <th className="p-3">Específica</th>
-              <th className="p-3">Duración</th>
-              <th className="p-3">Fecha</th>
-              <th className="p-3">Intensidad</th>
-              {selectedIDs.length > 0 && <th>Editar</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {trainings.map((training) => (
-              <tr
-                key={training._id}
-                className={`border-t border-gray-600 ${
-                  selectedIDs.includes(training._id) ? "bg-gray-600" : ""
-                }`}
-              >
-                <td className="p-3">
-                  <input
-                    type="checkbox"
-                    checked={selectedIDs.includes(training._id)}
-                    onChange={() => toggleSelection(training._id)}
-                  />
-                </td>
-                <td className="p-3">{training.nombre}</td>
-                <td className="p-3">
-                  {training.capacidad === "cond"
-                    ? "Condicional"
-                    : "Coordinativa"}
-                </td>
-                <td className="p-3">{training.capaEspe}</td>
-                <td className="p-3">{training.duracion} min</td>
-                <td className="p-3">{training.fecha}</td>
-                <td className="p-3">{training.intencidad}</td>
-                {selectedIDs.length > 0 && (
-                  <td className="p-3">
-                    {selectedIDs.includes(training._id) && (
-                      <button
-                        onClick={() => {
-                          onEdit(training);
-                        }}
-                        className="w-24 px-4 py-2 rounded transition-all duration-200 text-white bg-blue-600 hover:bg-blue-500"
-                      >
-                        Editar
-                      </button>
-                    )}
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }
