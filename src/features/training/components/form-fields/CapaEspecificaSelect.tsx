@@ -5,6 +5,7 @@ interface Props {
   capacidadSeleccionada: string;
   capacidadesCondicionales: Array<string>;
   capacidadesCoordinativas: Array<string>;
+  defaultValue?: string;
 }
 
 export default function CapaEspecificaSelect({
@@ -12,6 +13,7 @@ export default function CapaEspecificaSelect({
   capacidadSeleccionada,
   capacidadesCondicionales,
   capacidadesCoordinativas,
+  defaultValue,
 }: Props) {
   return (
     <div className={styleDivInput}>
@@ -22,6 +24,7 @@ export default function CapaEspecificaSelect({
         name="capaEspe"
         id="capaEspe"
         className="mt-1 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        defaultValue={defaultValue}
       >
         {capacidadSeleccionada === "" ? (
           <option className="text-black">Seleccione una opción</option>
@@ -30,7 +33,12 @@ export default function CapaEspecificaSelect({
             ? capacidadesCondicionales
             : capacidadesCoordinativas
           ).map((capacidad) => (
-            <option key={capacidad} value={capacidad} className="text-black">
+            <option
+              key={capacidad}
+              value={capacidad}
+              className="text-black"
+              defaultValue={defaultValue}
+            >
               {capacidad}
             </option>
           ))

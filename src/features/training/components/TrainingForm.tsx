@@ -15,13 +15,17 @@ import { useTrainingFormHandlers } from "@/features/training/hooks/useTrainingFo
 import { Training } from "@/types/training";
 import { Id } from "../../../../convex/_generated/dataModel";
 
+interface Props {
+  setIsModalOpen: (value: boolean) => void;
+  trainingToEdit?: (Training & { _id: Id<"trainings"> }) | undefined;
+  setTrainingToEdit?: (value: undefined) => void;
+}
+
 export default function TrainingForm({
   setIsModalOpen,
   trainingToEdit,
-}: {
-  setIsModalOpen: (value: boolean) => void;
-  trainingToEdit?: (Training & { _id: Id<"trainings"> }) | undefined;
-}) {
+  setTrainingToEdit,
+}: Props) {
   // Inicio del input range
   const [intensidad, setIntensidad] = useState("5");
 
@@ -35,7 +39,8 @@ export default function TrainingForm({
     setIsModalOpen,
     setCapacidadSeleccionada,
     setIntensidad,
-    trainingToEdit
+    trainingToEdit,
+    setTrainingToEdit
   );
 
   return (
@@ -53,6 +58,7 @@ export default function TrainingForm({
         capacidadSeleccionada={capacidadSeleccionada}
         capacidadesCondicionales={capacidadesCondicionales}
         capacidadesCoordinativas={capacidadesCoordinativas}
+        defaultValue={trainingToEdit?.capaEspe}
       />
 
       <InputFile
@@ -91,10 +97,7 @@ export default function TrainingForm({
         className={styleDivInput}
       />
 
-      <IntensidadRange
-        intensidad={intensidad}
-        setIntensidad={setIntensidad}
-      />
+      <IntensidadRange intensidad={intensidad} setIntensidad={setIntensidad} />
 
       <div className="mt-6 flex justify-end gap-4 md:gap-2 md:mt-3 ">
         <button

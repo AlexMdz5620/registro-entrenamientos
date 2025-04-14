@@ -11,6 +11,7 @@ import NewSessionBtn from "@/features/training/components/NewSessionBtn";
 
 export default function Home() {
   const trainings = useQuery(api.training.getTrainings);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [trainingToEdit, setTrainingToEdit] = useState<
     (Training & { _id: Id<"trainings"> }) | undefined
@@ -60,6 +61,7 @@ export default function Home() {
           <TrainingModal
             setIsModalOpen={setIsModalOpen}
             trainingToEdit={trainingToEdit}
+            setTrainingToEdit={setTrainingToEdit}
           />
         )}
       </main>

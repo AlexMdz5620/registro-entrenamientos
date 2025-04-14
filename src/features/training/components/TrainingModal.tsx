@@ -7,11 +7,13 @@ import TrainingForm from "./TrainingForm";
 interface Props {
   trainingToEdit?: Training & { _id: Id<"trainings"> };
   setIsModalOpen: (value: boolean) => void;
+  setTrainingToEdit?: (value: undefined) => void;
 }
 
 export default function TrainingModal({
   trainingToEdit,
   setIsModalOpen,
+  setTrainingToEdit,
 }: Props) {
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 p-4 min-h-screen">
@@ -22,6 +24,7 @@ export default function TrainingModal({
         <TrainingForm
           setIsModalOpen={setIsModalOpen}
           trainingToEdit={trainingToEdit}
+          setTrainingToEdit={setTrainingToEdit}
         />
       </div>
     </div>

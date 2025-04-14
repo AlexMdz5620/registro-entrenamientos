@@ -48,12 +48,9 @@ export default function TrainingList({ trainings, onEdit }: Props) {
 
   return (
     <div className="w-full max-w-5xl mt-6">
-      {/* Barra de acciones */}
       <div className="flex justify-between items-center mb-4">
-        {/* Título alineado a la izquierda */}
         <h2 className="text-white text-2xl font-bold">Sesiones Registradas</h2>
 
-        {/* Botones alineados a la derecha */}
         <div className="flex gap-2">
           <DeleteButton
             onDelete={() => {
@@ -70,7 +67,6 @@ export default function TrainingList({ trainings, onEdit }: Props) {
         toggleSelection={toggleSelection}
         onEdit={onEdit}
       />
-      {/* Tabla */}
     </div>
   );
 }

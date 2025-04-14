@@ -10,7 +10,8 @@ export function useTrainingFormHandlers(
   setIsModalOpen: (value: boolean) => void,
   setCapacidadSeleccionada: (value: string) => void,
   setIntensidad: (value: string) => void,
-  trainingToEdit?: Training & { _id: Id<"trainings"> }
+  trainingToEdit?: Training & { _id: Id<"trainings"> },
+  setTrainingToEdit?: (value: undefined) => void,
 ) {
   // Instancia para creación de un nuevo entrenamiento
   const createTraining = useMutation(api.training.saveTraining);
@@ -27,7 +28,10 @@ export function useTrainingFormHandlers(
     setIsModalOpen(false);
     setCapacidadSeleccionada("");
     setIntensidad("5");
-  }, [setIsModalOpen, setCapacidadSeleccionada, setIntensidad]);
+    if(setTrainingToEdit){
+      setTrainingToEdit(undefined);
+    }
+  }, [setIsModalOpen, setCapacidadSeleccionada, setIntensidad, setTrainingToEdit]);
 
   // Crear un nuevo entrenamiento
   const handleSubmit = useCallback(
